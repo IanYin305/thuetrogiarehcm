@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Danh sách phòng trọ</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Airbnb - Chọn Địa Điểm Trên Quả Cầu</title>
+    <!-- Nhúng thư viện OpenGlobus từ CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@openglobus/og/lib/og.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@openglobus/og/lib/og.css">
+    <style>
+        #globus {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
+    <!-- Phần tử chứa quả cầu -->
+    <div id="globus"></div>
 
-<h1>🏠 Website thông tin phòng trọ</h1>
+    <script>
+        // Khởi tạo quả cầu OpenGlobus
+        const globus = new og.Globe({
+            target: "globus", // ID của phần tử HTML chứa quả cầu
+            name: "Trái Đất",
+            terrain: new og.terrain.GlobusTerrain(),
+            layers: [
+                new og.layer.XYZ("OpenStreetMap", {
+                    isBaseLayer: true,
+                    url: "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    visibility: true,
+                })
+            ]
+        });
 
-<div class="filter">
-  <select id="quan">
-    <option value="">Tất cả quận</option>
-    <option value="Quận 1">Quận 1</option>
-    <option value="Quận 3">Quận 3</option>
-    <option value="Quận 7">Quận 7</option>
-  </select>
-
-  <select id="gia">
-    <option value="">Tất cả giá</option>
-    <option value="2000000">Dưới 2 triệu</option>
-    <option value="3000000">Dưới 3 triệu</option>
-    <option value="4000000">Dưới 4 triệu</option>
-  </select>
-
-  <button onclick="locPhong()">Lọc phòng</button>
-</div>
-
-<div id="list"></div>
-
-<script src="script.js"></script>
+        // Xử lý sự kiện click trên quả cầu
+        globus.planet.events.on("click", function(e) {
+            // Lấy tọa độ địa lý (vĩ độ, kinh độ) từ sự kiện click
+            const lonLat = globus.planet.getLonLatFromPixelTerrain(e.pos);
+            if (lonLat) {
+                const kinhDo = lonLat.lon.toFixed(6);
+                const viDo = lonLat.lat.toFixed(6);
+                alert(`Bạn đã chọn vị trí:\nKinh độ: ${kinhDo}\nVĩ độ: ${viDo}`);
+                // TODO: Gửi tọa độ này đến hệ thống tìm kiếm chỗ trọ của bạn
+                // Ví dụ: window.location.href = `/tim-kiem?lat=${viDo}&lon=${kinhDo}`;
+            }
+        });
+    </script>
 </body>
 </html>
