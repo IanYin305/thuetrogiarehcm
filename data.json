@@ -1,0 +1,20 @@
+[
+  {
+    "ten": "Phòng trọ Quận 7",
+    "gia": 2500000,
+    "quan": "Quận 7",
+    "dia_chi": "123 Nguyễn Thị Thập",
+    "map": "https://maps.google.com/?q=Quận+7",
+    "hinh": "https://via.placeholder.com/300",
+    "sdt": "0909123456"
+  },
+  {
+    "ten": "Phòng trọ Quận 3",
+    "gia": 3500000,
+    "quan": "Quận 3",
+    "dia_chi": "45 Võ Văn Tần",
+    "map": "https://maps.google.com/?q=Quận+3",
+    "hinh": "https://via.placeholder.com/300",
+    "sdt": "0911222333"
+  }
+]
