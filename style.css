@@ -1,19 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+  background: #f4f6f8;
+  margin: 0;
   padding: 20px;
+  color: #333;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* FILTER */
 .filter {
-  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
+.filter select,
+.filter button {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.filter button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.filter button:hover {
+  background: #0056cc;
+}
+
+/* LIST */
+#list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
 .card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 15px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card img {
   width: 100%;
-  max-width: 300px;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card .content {
+  padding: 15px;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.card a:hover {
+  text-decoration: underline;
 }
