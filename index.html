@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách phòng trọ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🏠 Website thông tin phòng trọ</h1>
+
+<div class="filter">
+  <select id="quan">
+    <option value="">Tất cả quận</option>
+    <option value="Quận 1">Quận 1</option>
+    <option value="Quận 3">Quận 3</option>
+    <option value="Quận 7">Quận 7</option>
+  </select>
+
+  <select id="gia">
+    <option value="">Tất cả giá</option>
+    <option value="2000000">Dưới 2 triệu</option>
+    <option value="3000000">Dưới 3 triệu</option>
+    <option value="4000000">Dưới 4 triệu</option>
+  </select>
+
+  <button onclick="locPhong()">Lọc phòng</button>
+</div>
+
+<div id="list"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
