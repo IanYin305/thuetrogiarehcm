@@ -6,60 +6,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: #fff;
       color: #222;
-      padding-bottom: 40px;
+      padding-bottom: 90px;
     }
 
     header {
+      position: sticky;
+      top: 0;
+      background: white;
       padding: 14px 16px;
       border-bottom: 1px solid #eee;
+      z-index: 100;
       text-align: center;
       font-weight: 600;
-    }
-
-    /* ===== FILTER ===== */
-    .filter {
-      display: flex;
-      gap: 10px;
-      padding: 12px 16px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .filter select {
-      flex: 1;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
     }
 
     .phong-list {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 24px;
       padding: 16px;
     }
 
     .phong-card {
-      background: white;
       border-radius: 16px;
       overflow: hidden;
+      background: white;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      position: relative;
     }
 
     .phong-card img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
     }
 
     .phong-info {
-      padding: 14px;
+      padding: 14px 16px;
     }
 
     .phong-info h3 {
@@ -69,38 +62,43 @@
 
     .gia {
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .quan {
       font-size: 14px;
-      color: #666;
-      margin-bottom: 8px;
+      color: #717171;
+      margin-bottom: 10px;
     }
 
+    /* ===== TAG TIỆN ÍCH ===== */
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .tag {
       background: #f2f2f2;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
       font-size: 12px;
+      color: #333;
+      white-space: nowrap;
     }
 
+    /* ===== CTA ===== */
     .cta {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .cta a {
       flex: 1;
       text-align: center;
-      padding: 9px 0;
+      padding: 10px 0;
       border-radius: 10px;
       font-weight: 600;
       font-size: 14px;
@@ -110,9 +108,12 @@
 
     .call { background: #ff385c; }
     .zalo { background: #0068ff; }
+    .map  { background: #2ecc71; flex-basis: 100%; }
 
     @media (min-width: 768px) {
-      .phong-list { grid-template-columns: repeat(2, 1fr); }
+      .phong-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (min-width: 1024px) {
@@ -129,23 +130,10 @@
 
 <header>🏠 Thuê trọ giá tốt</header>
 
-<!-- FILTER -->
-<div class="filter">
-  <select id="filterQuan">
-    <option value="">Tất cả quận</option>
-  </select>
-
-  <select id="filterGia">
-    <option value="">Tất cả giá</option>
-    <option value="3000000">Dưới 3 triệu</option>
-    <option value="4000000">3 – 4 triệu</option>
-    <option value="5000000">Trên 4 triệu</option>
-  </select>
-</div>
-
 <div class="phong-list" id="phongList"></div>
 
 <script>
+  // ===== DATA PHÒNG + TAG =====
   const phongData = [
     {
       tieu_de: "Phòng Quận 7 – gần Lotte Mart",
@@ -153,15 +141,17 @@
       quan: "Quận 7",
       hinh_anh: "https://picsum.photos/600/400?random=1",
       phone: "0909123456",
-      tags: ["❄️ Máy lạnh", "🚿 WC riêng", "📶 Wifi"]
+      map: "https://maps.google.com/?q=Lotte+Mart+Quận+7",
+      tags: ["❄️ Máy lạnh", "🚿 WC riêng", "🧺 Máy giặt", "📶 Wifi"]
     },
     {
-      tieu_de: "Phòng Bình Thạnh full nội thất",
+      tieu_de: "Phòng full nội thất Bình Thạnh",
       gia: 4200000,
       quan: "Bình Thạnh",
       hinh_anh: "https://picsum.photos/600/400?random=2",
       phone: "0911222333",
-      tags: ["🛏️ Nội thất", "🚿 WC riêng"]
+      map: "https://maps.google.com/?q=Quận+Bình+Thạnh",
+      tags: ["🛏️ Nội thất", "🚿 WC riêng", "🔐 Khóa vân tay"]
     },
     {
       tieu_de: "Phòng mới xây Tân Bình",
@@ -169,77 +159,40 @@
       quan: "Tân Bình",
       hinh_anh: "https://picsum.photos/600/400?random=3",
       phone: "0933444555",
-      tags: ["🆕 Phòng mới", "🧺 Máy giặt"]
-    },
-    {
-      tieu_de: "Phòng sinh viên Thủ Đức",
-      gia: 2800000,
-      quan: "Thủ Đức",
-      hinh_anh: "https://picsum.photos/600/400?random=4",
-      phone: "0988777666",
-      tags: ["👩‍🎓 Sinh viên", "🛵 Giữ xe"]
+      map: "https://maps.google.com/?q=Quận+Tân+Bình",
+      tags: ["🆕 Phòng mới", "🧺 Máy giặt chung", "🛵 Giữ xe"]
     }
   ];
 
   const phongList = document.getElementById("phongList");
-  const filterQuan = document.getElementById("filterQuan");
-  const filterGia = document.getElementById("filterGia");
 
-  // Load danh sách quận
-  [...new Set(phongData.map(p => p.quan))].forEach(quan => {
-    const opt = document.createElement("option");
-    opt.value = quan;
-    opt.innerText = quan;
-    filterQuan.appendChild(opt);
-  });
+  phongData.forEach(phong => {
+    const card = document.createElement("div");
+    card.className = "phong-card";
 
-  function render(data) {
-    phongList.innerHTML = "";
-    data.forEach(phong => {
-      const tagHTML = phong.tags.map(t => `<span class="tag">${t}</span>`).join("");
+    const tagHTML = phong.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
 
-      phongList.innerHTML += `
-        <div class="phong-card">
-          <img src="${phong.hinh_anh}">
-          <div class="phong-info">
-            <h3>${phong.tieu_de}</h3>
-            <div class="gia">${phong.gia.toLocaleString()} đ / tháng</div>
-            <div class="quan">${phong.quan}</div>
+    card.innerHTML = `
+      <img src="${phong.hinh_anh}">
+      <div class="phong-info">
+        <h3>${phong.tieu_de}</h3>
+        <div class="gia">${phong.gia.toLocaleString()} đ / tháng</div>
+        <div class="quan">${phong.quan}</div>
 
-            <div class="tags">${tagHTML}</div>
-
-            <div class="cta">
-              <a class="call" href="tel:${phong.phone}">📞 Gọi</a>
-              <a class="zalo" href="https://zalo.me/${phong.phone}" target="_blank">💬 Zalo</a>
-            </div>
-          </div>
+        <div class="tags">
+          ${tagHTML}
         </div>
-      `;
-    });
-  }
 
-  function filterPhong() {
-    const quan = filterQuan.value;
-    const gia = Number(filterGia.value);
+        <div class="cta">
+          <a class="call" href="tel:${phong.phone}">📞 Gọi</a>
+          <a class="zalo" href="https://zalo.me/${phong.phone}" target="_blank">💬 Zalo</a>
+          <a class="map" href="${phong.map}" target="_blank">📍 Bản đồ</a>
+        </div>
+      </div>
+    `;
 
-    let result = phongData.filter(p => {
-      let okQuan = !quan || p.quan === quan;
-      let okGia = true;
-
-      if (gia === 3000000) okGia = p.gia < 3000000;
-      if (gia === 4000000) okGia = p.gia >= 3000000 && p.gia <= 4000000;
-      if (gia === 5000000) okGia = p.gia > 4000000;
-
-      return okQuan && okGia;
-    });
-
-    render(result);
-  }
-
-  filterQuan.addEventListener("change", filterPhong);
-  filterGia.addEventListener("change", filterPhong);
-
-  render(phongData);
+    phongList.appendChild(card);
+  });
 </script>
 
 </body>
