@@ -2,15 +2,22 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Thuê phòng trọ giá tốt</title>
+  <title>Thuê phòng trọ – Airbnb mini</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO cơ bản -->
+  <meta name="description" content="Danh sách phòng trọ giá tốt, xem vị trí chính xác trên bản đồ, giao diện giống Airbnb.">
+  <meta name="robots" content="index, follow">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <header class="header">
   <div class="logo">🏠 PhòngTrọ</div>
+
   <div class="search-bar">
     <select id="quan">
       <option value="">Khu vực</option>
@@ -30,17 +37,38 @@
   </div>
 </header>
 
-<!-- LIST -->
-<main id="list"></main>
+<!-- ================= MAIN CONTENT ================= -->
+<div class="container">
 
-<!-- POPUP DETAIL -->
+  <!-- ===== LIST PHÒNG ===== -->
+  <div id="list">
+    <!-- Card phòng render bằng JS -->
+  </div>
+
+  <!-- ===== MAP ===== -->
+  <div class="map-wrap">
+    <iframe
+      id="main-map"
+      src="https://www.google.com/maps?q=Ho+Chi+Minh&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+</div>
+
+<!-- ================= MODAL CHI TIẾT ================= -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="dongModal()">×</span>
-    <div id="modal-body"></div>
+    <div id="modal-body">
+      <!-- Nội dung popup render bằng JS -->
+    </div>
   </div>
 </div>
 
+<!-- ================= JS ================= -->
 <script src="script.js"></script>
+
 </body>
 </html>
