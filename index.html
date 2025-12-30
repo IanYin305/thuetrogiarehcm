@@ -51,24 +51,6 @@
       object-fit: cover;
     }
 
-    .btn-like {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.95);
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .btn-like.active {
-      color: #ff385c;
-    }
-
     .phong-info {
       padding: 14px 16px;
     }
@@ -80,7 +62,7 @@
 
     .gia {
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .quan {
@@ -89,6 +71,24 @@
       margin-bottom: 10px;
     }
 
+    /* ===== TAG TIỆN ÍCH ===== */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      background: #f2f2f2;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    /* ===== CTA ===== */
     .cta {
       display: flex;
       gap: 8px;
@@ -106,42 +106,9 @@
       text-decoration: none;
     }
 
-    .call {
-      background: #ff385c;
-    }
-
-    .zalo {
-      background: #0068ff;
-    }
-
-    .map {
-      background: #2ecc71;
-      flex-basis: 100%;
-    }
-
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: white;
-      border-top: 1px solid #eee;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .bottom-bar div {
-      font-size: 12px;
-      text-align: center;
-      color: #666;
-    }
-
-    .bottom-bar strong {
-      display: block;
-      font-size: 20px;
-    }
+    .call { background: #ff385c; }
+    .zalo { background: #0068ff; }
+    .map  { background: #2ecc71; flex-basis: 100%; }
 
     @media (min-width: 768px) {
       .phong-list {
@@ -165,98 +132,59 @@
 
 <div class="phong-list" id="phongList"></div>
 
-<div class="bottom-bar">
-  <div><strong>🏠</strong>Trang chủ</div>
-  <div><strong>❤️</strong>Đã lưu</div>
-  <div><strong>📍</strong>Bản đồ</div>
-  <div><strong>👤</strong>Tài khoản</div>
-</div>
-
 <script>
-  // ===== DATA PHÒNG =====
+  // ===== DATA PHÒNG + TAG =====
   const phongData = [
     {
-      id: 1,
       tieu_de: "Phòng Quận 7 – gần Lotte Mart",
       gia: 3500000,
       quan: "Quận 7",
       hinh_anh: "https://picsum.photos/600/400?random=1",
       phone: "0909123456",
-      map: "https://maps.google.com/?q=Lotte+Mart+Quận+7"
+      map: "https://maps.google.com/?q=Lotte+Mart+Quận+7",
+      tags: ["❄️ Máy lạnh", "🚿 WC riêng", "🧺 Máy giặt", "📶 Wifi"]
     },
     {
-      id: 2,
       tieu_de: "Phòng full nội thất Bình Thạnh",
       gia: 4200000,
       quan: "Bình Thạnh",
       hinh_anh: "https://picsum.photos/600/400?random=2",
       phone: "0911222333",
-      map: "https://maps.google.com/?q=Quận+Bình+Thạnh"
+      map: "https://maps.google.com/?q=Quận+Bình+Thạnh",
+      tags: ["🛏️ Nội thất", "🚿 WC riêng", "🔐 Khóa vân tay"]
     },
     {
-      id: 3,
       tieu_de: "Phòng mới xây Tân Bình",
       gia: 3000000,
       quan: "Tân Bình",
       hinh_anh: "https://picsum.photos/600/400?random=3",
       phone: "0933444555",
-      map: "https://maps.google.com/?q=Quận+Tân+Bình"
-    },
-    {
-      id: 4,
-      tieu_de: "Phòng sinh viên Thủ Đức",
-      gia: 2800000,
-      quan: "Thủ Đức",
-      hinh_anh: "https://picsum.photos/600/400?random=4",
-      phone: "0988777666",
-      map: "https://maps.google.com/?q=Thủ+Đức"
+      map: "https://maps.google.com/?q=Quận+Tân+Bình",
+      tags: ["🆕 Phòng mới", "🧺 Máy giặt chung", "🛵 Giữ xe"]
     }
   ];
 
-  const KEY = "phong_yeu_thich";
-
-  function getFavorites() {
-    return JSON.parse(localStorage.getItem(KEY)) || [];
-  }
-
-  function saveFavorites(list) {
-    localStorage.setItem(KEY, JSON.stringify(list));
-  }
-
-  function toggleFavorite(id, btn) {
-    let favorites = getFavorites();
-    if (favorites.includes(id)) {
-      favorites = favorites.filter(x => x !== id);
-      btn.classList.remove("active");
-      btn.innerText = "♡";
-    } else {
-      favorites.push(id);
-      btn.classList.add("active");
-      btn.innerText = "♥";
-    }
-    saveFavorites(favorites);
-  }
-
   const phongList = document.getElementById("phongList");
-  const favorites = getFavorites();
 
   phongData.forEach(phong => {
-    const isLiked = favorites.includes(phong.id);
-
     const card = document.createElement("div");
     card.className = "phong-card";
 
+    const tagHTML = phong.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+
     card.innerHTML = `
       <img src="${phong.hinh_anh}">
-      <button class="btn-like ${isLiked ? 'active' : ''}" data-id="${phong.id}">
-        ${isLiked ? "♥" : "♡"}
-      </button>
       <div class="phong-info">
         <h3>${phong.tieu_de}</h3>
         <div class="gia">${phong.gia.toLocaleString()} đ / tháng</div>
         <div class="quan">${phong.quan}</div>
+
+        <div class="tags">
+          ${tagHTML}
+        </div>
+
         <div class="cta">
-          <a class="call" href="tel:${phong.phone}">📞 Gọi ngay</a>
+          <a class="call" href="tel:${phong.phone}">📞 Gọi</a>
           <a class="zalo" href="https://zalo.me/${phong.phone}" target="_blank">💬 Zalo</a>
           <a class="map" href="${phong.map}" target="_blank">📍 Bản đồ</a>
         </div>
@@ -264,11 +192,6 @@
     `;
 
     phongList.appendChild(card);
-  });
-
-  document.querySelectorAll(".btn-like").forEach(btn => {
-    const id = Number(btn.dataset.id);
-    btn.addEventListener("click", () => toggleFavorite(id, btn));
   });
 </script>
 
