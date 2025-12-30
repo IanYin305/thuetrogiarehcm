@@ -20,8 +20,13 @@ header {
   font-size: 18px;
   border-bottom: 1px solid #eee;
   text-align: center;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
 }
 
+/* ===== FILTER ===== */
 .filter {
   padding: 12px;
   border-bottom: 1px solid #eee;
@@ -50,10 +55,7 @@ header {
   cursor: pointer;
 }
 
-.tien-ich input {
-  margin-right: 4px;
-}
-
+/* ===== LIST ===== */
 .phong-list {
   display: grid;
   gap: 20px;
@@ -77,8 +79,21 @@ header {
   padding: 14px;
 }
 
-.gia { font-weight: 600; margin-bottom: 4px; }
-.quan { font-size: 14px; color: #666; margin-bottom: 8px; }
+.phong-info h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.gia {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.quan {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
 
 .tags {
   display: flex;
@@ -97,7 +112,11 @@ header {
   .phong-list { grid-template-columns: repeat(2,1fr); }
 }
 @media (min-width: 1024px) {
-  .phong-list { grid-template-columns: repeat(3,1fr); max-width: 1200px; margin: auto; }
+  .phong-list {
+    grid-template-columns: repeat(3,1fr);
+    max-width: 1200px;
+    margin: auto;
+  }
 }
 </style>
 </head>
@@ -106,6 +125,7 @@ header {
 
 <header>🏠 Thuê trọ giá tốt</header>
 
+<!-- FILTER -->
 <div class="filter">
   <select id="filterQuan">
     <option value="">Tất cả quận</option>
@@ -121,6 +141,7 @@ header {
   <div class="tien-ich" id="tienIchBox"></div>
 </div>
 
+<!-- LIST -->
 <div class="phong-list" id="phongList"></div>
 
 <script>
@@ -153,12 +174,11 @@ const filterQuan = document.getElementById("filterQuan");
 const filterGia = document.getElementById("filterGia");
 const tienIchBox = document.getElementById("tienIchBox");
 
-// Load quận
+/* ===== INIT FILTER DATA ===== */
 [...new Set(phongData.map(p => p.quan))].forEach(q => {
   filterQuan.innerHTML += `<option value="${q}">${q}</option>`;
 });
 
-// Load tiện ích
 [...new Set(phongData.flatMap(p => p.tags))].forEach(t => {
   tienIchBox.innerHTML += `
     <label>
@@ -167,6 +187,7 @@ const tienIchBox = document.getElementById("tienIchBox");
   `;
 });
 
+/* ===== RENDER ===== */
 function render(list) {
   phongList.innerHTML = "";
   list.forEach(p => {
@@ -175,7 +196,7 @@ function render(list) {
         <img src="${p.hinh_anh}">
         <div class="phong-info">
           <h3>${p.tieu_de}</h3>
-          <div class="gia">${p.gia.toLocaleString()} đ/tháng</div>
+          <div class="gia">${p.gia.toLocaleString()} đ / tháng</div>
           <div class="quan">${p.quan}</div>
           <div class="tags">
             ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
@@ -186,6 +207,7 @@ function render(list) {
   });
 }
 
+/* ===== FILTER LOGIC ===== */
 function filterPhong() {
   const quan = filterQuan.value;
   const gia = filterGia.value;
@@ -197,7 +219,6 @@ function filterPhong() {
     if (gia === "lt3" && p.gia >= 3000000) return false;
     if (gia === "3_4" && (p.gia < 3000000 || p.gia > 4000000)) return false;
     if (gia === "gt4" && p.gia <= 4000000) return false;
-
     return tienIchChecked.every(t => p.tags.includes(t));
   });
 
