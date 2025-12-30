@@ -1,48 +1,99 @@
-let currentIndex = 0;
+let danhSachPhong = [];
 
-function moModal(p) {
-  currentIndex = 0;
+/* ================= LOAD DATA ================= */
+fetch("data.json")
+  .then(res => res.json())
+  .then(data => {
+    danhSachPhong = data;
+    hienThi(danhSachPhong);
+  });
 
-  const images = p.hinh.map((img, i) =>
-    `<img src="${img}" class="${i === 0 ? "active" : ""}">`
-  ).join("");
+/* ================= HIỂN THỊ DANH SÁCH ================= */
+function hienThi(ds) {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
 
-  const tienIch = p.tien_ich.map(t => `<span>${t}</span>`).join("");
+  if (ds.length === 0) {
+    list.innerHTML = "<p>😢 Không tìm thấy phòng phù hợp</p>";
+    return;
+  }
 
-  document.getElementById("modal").style.display = "block";
-  document.getElementById("modal-body").innerHTML = `
+  ds.forEach(p => {
+    list.innerHTML += `
+      <div class="card" onclick="moModal(${p.id})">
+        <img src="${p.hinh[0]}" alt="${p.ten}">
+        <div class="info">
+          <h3>${p.ten}</h3>
+          <p>${p.quan}</p>
+          <p><strong>${p.gia.toLocaleString()} đ / tháng</strong></p>
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* ================= LỌC PHÒNG ================= */
+function locPhong() {
+  const quan = document.getElementById("quan").value;
+  const gia = document.getElementById("gia").value;
+
+  let ketQua = danhSachPhong.filter(p => {
+    let hopQuan = quan ? p.quan === quan : true;
+    let hopGia = gia ? p.gia <= gia : true;
+    return hopQuan && hopGia;
+  });
+
+  hienThi(ketQua);
+}
+
+/* ================= MODAL ================= */
+function moModal(id) {
+  const phong = danhSachPhong.find(p => p.id === id);
+  const modal = document.getElementById("modal");
+  const body = document.getElementById("modal-body");
+
+  body.innerHTML = `
     <div class="slider">
-      ${images}
-      <button class="slider-btn left" onclick="prevImg()">‹</button>
-      <button class="slider-btn right" onclick="nextImg()">›</button>
+      ${phong.hinh.map(img => `<img src="${img}">`).join("")}
     </div>
 
-    <h2>${p.ten}</h2>
-    <div class="rating">⭐ ${p.rating}</div>
+    <div class="modal-info">
+      <h2>${phong.ten}</h2>
+      <p><strong>Khu vực:</strong> ${phong.quan}</p>
+      <p><strong>Giá:</strong> ${phong.gia.toLocaleString()} đ / tháng</p>
+      <p><strong>Mô tả:</strong> ${phong.mo_ta}</p>
 
-    <p><strong>Giá:</strong> ${p.gia.toLocaleString()} đ / tháng</p>
-    <p><strong>Địa chỉ:</strong> ${p.dia_chi}</p>
+      <div class="price">${phong.gia.toLocaleString()} đ / tháng</div>
 
-    <div class="tien-ich">${tienIch}</div>
-
-    <p><strong>Liên hệ:</strong> ${p.sdt}</p>
-
-    <iframe src="${p.map_embed}" width="100%" height="250"
-      style="border:0; border-radius:12px;"
-      loading="lazy"></iframe>
+      <iframe
+        src="${phong.map_embed}"
+        width="100%"
+        height="300"
+        style="border-radius:16px;margin-top:10px;"
+        loading="lazy">
+      </iframe>
+    </div>
   `;
+
+  modal.style.display = "flex";
+
+  // focus map chính
+  focusMap(phong.map_embed);
 }
 
-function nextImg() {
-  const imgs = document.querySelectorAll(".slider img");
-  imgs[currentIndex].classList.remove("active");
-  currentIndex = (currentIndex + 1) % imgs.length;
-  imgs[currentIndex].classList.add("active");
+function dongModal() {
+  document.getElementById("modal").style.display = "none";
 }
 
-function prevImg() {
-  const imgs = document.querySelectorAll(".slider img");
-  imgs[currentIndex].classList.remove("active");
-  currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
-  imgs[currentIndex].classList.add("active");
+/* ================= MAP ================= */
+function focusMap(embed) {
+  document.getElementById("main-map").src = embed;
 }
+
+/* ================= CLICK NGOÀI MODAL ĐỂ ĐÓNG ================= */
+window.onclick = function (e) {
+  const modal = document.getElementById("modal");
+  if (e.target === modal) {
+    dongModal();
+  }
+};
