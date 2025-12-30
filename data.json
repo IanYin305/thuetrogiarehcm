@@ -1,20 +1,11 @@
 [
   {
-    "ten": "Phòng trọ Quận 7",
-    "gia": 2500000,
+    "ten": "Studio đầy đủ nội thất tại Quận 7",
+    "gia": 2800000,
     "quan": "Quận 7",
-    "dia_chi": "123 Nguyễn Thị Thập",
-    "map": "https://maps.google.com/?q=Quận+7",
-    "hinh": "https://via.placeholder.com/300",
+    "dia_chi": "Nguyễn Thị Thập, Q7",
+    "hinh": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688",
+    "map_embed": "https://www.google.com/maps?q=Quận+7&output=embed",
     "sdt": "0909123456"
-  },
-  {
-    "ten": "Phòng trọ Quận 3",
-    "gia": 3500000,
-    "quan": "Quận 3",
-    "dia_chi": "45 Võ Văn Tần",
-    "map": "https://maps.google.com/?q=Quận+3",
-    "hinh": "https://via.placeholder.com/300",
-    "sdt": "0911222333"
   }
 ]
