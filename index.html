@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Airbnb - Chọn Địa Điểm Trên Quả Cầu</title>
-    <!-- Nhúng thư viện OpenGlobus từ CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@openglobus/og/lib/og.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@openglobus/og/lib/og.css">
-    <style>
-        #globus {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Thuê phòng trọ giá tốt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Phần tử chứa quả cầu -->
-    <div id="globus"></div>
 
-    <script>
-        // Khởi tạo quả cầu OpenGlobus
-        const globus = new og.Globe({
-            target: "globus", // ID của phần tử HTML chứa quả cầu
-            name: "Trái Đất",
-            terrain: new og.terrain.GlobusTerrain(),
-            layers: [
-                new og.layer.XYZ("OpenStreetMap", {
-                    isBaseLayer: true,
-                    url: "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    visibility: true,
-                })
-            ]
-        });
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">🏠 PhòngTrọ</div>
+  <div class="search-bar">
+    <select id="quan">
+      <option value="">Khu vực</option>
+      <option value="Quận 1">Quận 1</option>
+      <option value="Quận 3">Quận 3</option>
+      <option value="Quận 7">Quận 7</option>
+    </select>
 
-        // Xử lý sự kiện click trên quả cầu
-        globus.planet.events.on("click", function(e) {
-            // Lấy tọa độ địa lý (vĩ độ, kinh độ) từ sự kiện click
-            const lonLat = globus.planet.getLonLatFromPixelTerrain(e.pos);
-            if (lonLat) {
-                const kinhDo = lonLat.lon.toFixed(6);
-                const viDo = lonLat.lat.toFixed(6);
-                alert(`Bạn đã chọn vị trí:\nKinh độ: ${kinhDo}\nVĩ độ: ${viDo}`);
-                // TODO: Gửi tọa độ này đến hệ thống tìm kiếm chỗ trọ của bạn
-                // Ví dụ: window.location.href = `/tim-kiem?lat=${viDo}&lon=${kinhDo}`;
-            }
-        });
-    </script>
+    <select id="gia">
+      <option value="">Giá tối đa</option>
+      <option value="2000000">≤ 2 triệu</option>
+      <option value="3000000">≤ 3 triệu</option>
+      <option value="4000000">≤ 4 triệu</option>
+    </select>
+
+    <button onclick="locPhong()">Tìm</button>
+  </div>
+</header>
+
+<!-- LIST -->
+<main id="list"></main>
+
+<!-- POPUP DETAIL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="dongModal()">×</span>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
