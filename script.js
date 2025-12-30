@@ -7,27 +7,47 @@ fetch("data.json")
     hienThi(data);
   });
 
-<div class="card">
-  <img src="${p.hinh}">
-  <div class="content">
-    <h3>${p.ten}</h3>
-    <p><strong>Giá:</strong> ${p.gia.toLocaleString()} đ</p>
-    <p><strong>Khu vực:</strong> ${p.quan}</p>
-    <p><strong>Địa chỉ:</strong> ${p.dia_chi}</p>
-    <a href="${p.map}" target="_blank">📍 Xem vị trí phòng</a>
-    <p><strong>☎</strong> ${p.sdt}</p>
-  </div>
-</div>
+function hienThi(ds) {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
 
+  ds.forEach(p => {
+    list.innerHTML += `
+      <div class="card" onclick='moModal(${JSON.stringify(p)})'>
+        <img src="${p.hinh}">
+        <div class="info">
+          <h3>${p.ten}</h3>
+          <p>${p.quan}</p>
+          <p><strong>${p.gia.toLocaleString()} đ / tháng</strong></p>
+        </div>
+      </div>
+    `;
+  });
+}
 
 function locPhong() {
-  const quan = document.getElementById("quan").value;
-  const gia = document.getElementById("gia").value;
+  const q = document.getElementById("quan").value;
+  const g = document.getElementById("gia").value;
 
   let kq = data.filter(p =>
-    (!quan || p.quan === quan) &&
-    (!gia || p.gia <= gia)
+    (!q || p.quan === q) &&
+    (!g || p.gia <= g)
   );
 
   hienThi(kq);
+}
+
+function moModal(p) {
+  document.getElementById("modal").style.display = "block";
+  document.getElementById("modal-body").innerHTML = `
+    <h2>${p.ten}</h2>
+    <p><strong>Giá:</strong> ${p.gia.toLocaleString()} đ</p>
+    <p><strong>Địa chỉ:</strong> ${p.dia_chi}</p>
+    <p><strong>Liên hệ:</strong> ${p.sdt}</p>
+    <iframe src="${p.map_embed}" width="100%" height="250" style="border:0;" loading="lazy"></iframe>
+  `;
+}
+
+function dongModal() {
+  document.getElementById("modal").style.display = "none";
 }
