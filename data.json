@@ -8,10 +8,10 @@
     "rating": 4.8,
     "tien_ich": ["Wifi", "Máy lạnh", "Giữ xe", "WC riêng"],
     "hinh": [
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267"
+      "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG91c2V8ZW58MHx8MHx8fDA%3D",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG91c2V8ZW58MHx8MHx8fDA%3D",
+      "https://plus.unsplash.com/premium_photo-1661915661139-5b6a4e4a6fcc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG91c2V8ZW58MHx8MHx8fDA%3D"
     ],
-    "map_embed": "https://www.google.com/maps?q=Quận+7&output=embed"
+    "map_embed": "<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4050.100776419689!2d105.84056401107208!3d20.987720889105674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac6859edd7bd%3A0x17ae1602b37dac8c!2zTmjDoCB0aOG7nSBHacOhbyB44bupIEvhursgU8OpdA!5e1!3m2!1svi!2s!4v1767066308085!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
   }
 ]
