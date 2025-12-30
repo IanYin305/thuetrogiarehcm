@@ -17,7 +17,7 @@
     "ten": "Phòng studio Quận 3 – trung tâm",
     "quan": "Quận 3",
     "gia": 4500000,
-    "mo_ta": "Phòng studio full nội thất, máy lạnh, tủ lạnh, máy giặt chung. Phù hợp người đi làm.",
+    "mo_ta": "Phòng studio full nội thất, máy lạnh, tủ lạnh, phù hợp người đi làm.",
     "hinh": [
       "https://picsum.photos/400/300?random=4",
       "https://picsum.photos/400/300?random=5"
@@ -26,10 +26,10 @@
   },
   {
     "id": 3,
-    "ten": "Phòng giá rẻ Quận 1 – gần chợ Bến Thành",
+    "ten": "Phòng giá tốt Quận 1 – gần chợ Bến Thành",
     "quan": "Quận 1",
     "gia": 3800000,
-    "mo_ta": "Phòng nhỏ gọn, an ninh, gần chợ Bến Thành. Phù hợp sinh viên hoặc người đi làm.",
+    "mo_ta": "Phòng gọn gàng, an ninh tốt, gần trung tâm. Phù hợp sinh viên và người đi làm.",
     "hinh": [
       "https://picsum.photos/400/300?random=6",
       "https://picsum.photos/400/300?random=7"
@@ -41,7 +41,7 @@
     "ten": "Phòng mới xây Quận 7 – khu yên tĩnh",
     "quan": "Quận 7",
     "gia": 5200000,
-    "mo_ta": "Phòng mới 100%, có ban công, thang máy, hầm xe rộng. Khu dân cư yên tĩnh.",
+    "mo_ta": "Phòng mới 100%, có ban công, hầm xe, khu dân cư yên tĩnh, an ninh.",
     "hinh": [
       "https://picsum.photos/400/300?random=8",
       "https://picsum.photos/400/300?random=9",
