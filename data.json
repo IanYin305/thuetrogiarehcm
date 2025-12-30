@@ -1,14 +1,13 @@
 [
   {
     "id": 1,
-    "ten": "Phòng trọ Quận 7 – gần Lotte Mart",
-    "quan": "Quận 7",
-    "gia": 3000000,
-    "mo_ta": "Phòng sạch sẽ, có gác lửng, WC riêng, giờ giấc tự do. Gần Lotte Mart, tiện di chuyển.",
+    "ten": "42/6/17A Đồng Xoài",
+    "quan": "Tân Bình",
+    "gia": 3290000,
+    "mo_ta": "Studio mini giảm 500k xuyên suốt hợp đồng chỉ còn 3.290.000₫",
     "hinh": [
-      "https://picsum.photos/400/300?random=1",
-      "https://picsum.photos/400/300?random=2",
-      "https://picsum.photos/400/300?random=3"
+      "https://drive.google.com/file/d/1cSPQAoozX2zzin_Y2n-hoStMFqPjuwob/view?usp=drive_link",
+      "https://drive.google.com/file/d/183m6r1vxkQ-0mtiHqVmUqbTWOtSm2krh/view?usp=drive_link"
     ],
     "map_embed": "https://www.google.com/maps?q=10.731971,106.706222&output=embed"
   },
