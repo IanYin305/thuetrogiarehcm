@@ -14,9 +14,9 @@
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #ffffff;
+      background: #fff;
       color: #222;
-      padding-bottom: 80px;
+      padding-bottom: 90px;
     }
 
     header {
@@ -26,11 +26,8 @@
       padding: 14px 16px;
       border-bottom: 1px solid #eee;
       z-index: 100;
-    }
-
-    header h1 {
-      font-size: 18px;
       text-align: center;
+      font-weight: 600;
     }
 
     .phong-list {
@@ -52,7 +49,6 @@
       width: 100%;
       height: 220px;
       object-fit: cover;
-      display: block;
     }
 
     .btn-like {
@@ -74,33 +70,55 @@
     }
 
     .phong-info {
-      padding: 14px 16px 18px;
+      padding: 14px 16px;
     }
 
     .phong-info h3 {
       font-size: 16px;
-      line-height: 1.3;
       margin-bottom: 6px;
     }
 
     .gia {
-      font-size: 15px;
       font-weight: 600;
       margin-bottom: 4px;
-    }
-
-    .gia span {
-      font-weight: normal;
-      color: #666;
-      font-size: 13px;
     }
 
     .quan {
       font-size: 14px;
       color: #717171;
+      margin-bottom: 10px;
     }
 
-    /* ===== Bottom bar giống app ===== */
+    .cta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cta a {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      text-decoration: none;
+    }
+
+    .call {
+      background: #ff385c;
+    }
+
+    .zalo {
+      background: #0068ff;
+    }
+
+    .map {
+      background: #2ecc71;
+      flex-basis: 100%;
+    }
+
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -116,8 +134,8 @@
 
     .bottom-bar div {
       font-size: 12px;
-      color: #666;
       text-align: center;
+      color: #666;
     }
 
     .bottom-bar strong {
@@ -143,9 +161,7 @@
 
 <body>
 
-<header>
-  <h1>🏠 Thuê trọ giá tốt</h1>
-</header>
+<header>🏠 Thuê trọ giá tốt</header>
 
 <div class="phong-list" id="phongList"></div>
 
@@ -157,34 +173,43 @@
 </div>
 
 <script>
+  // ===== DATA PHÒNG =====
   const phongData = [
     {
       id: 1,
       tieu_de: "Phòng Quận 7 – gần Lotte Mart",
       gia: 3500000,
       quan: "Quận 7",
-      hinh_anh: "https://picsum.photos/600/400?random=1"
+      hinh_anh: "https://picsum.photos/600/400?random=1",
+      phone: "0909123456",
+      map: "https://maps.google.com/?q=Lotte+Mart+Quận+7"
     },
     {
       id: 2,
       tieu_de: "Phòng full nội thất Bình Thạnh",
       gia: 4200000,
       quan: "Bình Thạnh",
-      hinh_anh: "https://picsum.photos/600/400?random=2"
+      hinh_anh: "https://picsum.photos/600/400?random=2",
+      phone: "0911222333",
+      map: "https://maps.google.com/?q=Quận+Bình+Thạnh"
     },
     {
       id: 3,
       tieu_de: "Phòng mới xây Tân Bình",
       gia: 3000000,
       quan: "Tân Bình",
-      hinh_anh: "https://picsum.photos/600/400?random=3"
+      hinh_anh: "https://picsum.photos/600/400?random=3",
+      phone: "0933444555",
+      map: "https://maps.google.com/?q=Quận+Tân+Bình"
     },
     {
       id: 4,
       tieu_de: "Phòng sinh viên Thủ Đức",
       gia: 2800000,
       quan: "Thủ Đức",
-      hinh_anh: "https://picsum.photos/600/400?random=4"
+      hinh_anh: "https://picsum.photos/600/400?random=4",
+      phone: "0988777666",
+      map: "https://maps.google.com/?q=Thủ+Đức"
     }
   ];
 
@@ -200,7 +225,6 @@
 
   function toggleFavorite(id, btn) {
     let favorites = getFavorites();
-
     if (favorites.includes(id)) {
       favorites = favorites.filter(x => x !== id);
       btn.classList.remove("active");
@@ -210,7 +234,6 @@
       btn.classList.add("active");
       btn.innerText = "♥";
     }
-
     saveFavorites(favorites);
   }
 
@@ -230,8 +253,13 @@
       </button>
       <div class="phong-info">
         <h3>${phong.tieu_de}</h3>
-        <div class="gia">${phong.gia.toLocaleString()} đ <span>/tháng</span></div>
+        <div class="gia">${phong.gia.toLocaleString()} đ / tháng</div>
         <div class="quan">${phong.quan}</div>
+        <div class="cta">
+          <a class="call" href="tel:${phong.phone}">📞 Gọi ngay</a>
+          <a class="zalo" href="https://zalo.me/${phong.phone}" target="_blank">💬 Zalo</a>
+          <a class="map" href="${phong.map}" target="_blank">📍 Bản đồ</a>
+        </div>
       </div>
     `;
 
