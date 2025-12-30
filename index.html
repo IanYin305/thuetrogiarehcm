@@ -2,73 +2,183 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Thuê phòng trọ – Airbnb mini</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thuê trọ giá tốt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO cơ bản -->
-  <meta name="description" content="Danh sách phòng trọ giá tốt, xem vị trí chính xác trên bản đồ, giao diện giống Airbnb.">
-  <meta name="robots" content="index, follow">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .phong-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .phong-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .phong-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .phong-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .phong-info {
+      padding: 15px;
+    }
+
+    .phong-info h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .gia {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .quan {
+      color: #666;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .btn-like {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .btn-like.active {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="header">
-  <div class="logo">🏠 PhòngTrọ</div>
+  <h1>🏠 Danh sách phòng trọ</h1>
 
-  <div class="search-bar">
-    <select id="quan">
-      <option value="">Khu vực</option>
-      <option value="Quận 1">Quận 1</option>
-      <option value="Quận 3">Quận 3</option>
-      <option value="Quận 7">Quận 7</option>
-    </select>
+  <div class="phong-list" id="phongList"></div>
 
-    <select id="gia">
-      <option value="">Giá tối đa</option>
-      <option value="2000000">≤ 2 triệu</option>
-      <option value="3000000">≤ 3 triệu</option>
-      <option value="4000000">≤ 4 triệu</option>
-    </select>
+  <script>
+    // ===== DATA PHÒNG (VÍ DỤ) =====
+    const phongData = [
+      {
+        id: 1,
+        tieu_de: "Phòng trọ Quận 7 – Gần Lotte Mart",
+        gia: 3500000,
+        quan: "Quận 7",
+        hinh_anh: "https://picsum.photos/400/300?random=1"
+      },
+      {
+        id: 2,
+        tieu_de: "Phòng full nội thất – Quận Bình Thạnh",
+        gia: 4200000,
+        quan: "Bình Thạnh",
+        hinh_anh: "https://picsum.photos/400/300?random=2"
+      },
+      {
+        id: 3,
+        tieu_de: "Phòng mới xây – Quận Tân Bình",
+        gia: 3000000,
+        quan: "Tân Bình",
+        hinh_anh: "https://picsum.photos/400/300?random=3"
+      },
+      {
+        id: 4,
+        tieu_de: "Phòng gần ĐH Quốc Gia – Thủ Đức",
+        gia: 2800000,
+        quan: "Thủ Đức",
+        hinh_anh: "https://picsum.photos/400/300?random=4"
+      }
+    ];
 
-    <button onclick="locPhong()">Tìm</button>
-  </div>
-</header>
+    // ===== FAVORITE LOGIC =====
+    const KEY = "phong_yeu_thich";
 
-<!-- ================= MAIN CONTENT ================= -->
-<div class="container">
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem(KEY)) || [];
+    }
 
-  <!-- ===== LIST PHÒNG ===== -->
-  <div id="list">
-    <!-- Card phòng render bằng JS -->
-  </div>
+    function saveFavorites(list) {
+      localStorage.setItem(KEY, JSON.stringify(list));
+    }
 
-  <!-- ===== MAP ===== -->
-  <div class="map-wrap">
-    <iframe
-      id="main-map"
-      src="https://www.google.com/maps?q=Ho+Chi+Minh&output=embed"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
+    function toggleFavorite(id, btn) {
+      let favorites = getFavorites();
 
-</div>
+      if (favorites.includes(id)) {
+        favorites = favorites.filter(item => item !== id);
+        btn.classList.remove("active");
+        btn.innerText = "♡";
+      } else {
+        favorites.push(id);
+        btn.classList.add("active");
+        btn.innerText = "♥";
+      }
 
-<!-- ================= MODAL CHI TIẾT ================= -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="dongModal()">×</span>
-    <div id="modal-body">
-      <!-- Nội dung popup render bằng JS -->
-    </div>
-  </div>
-</div>
+      saveFavorites(favorites);
+    }
 
-<!-- ================= JS ================= -->
-<script src="script.js"></script>
+    // ===== RENDER PHÒNG =====
+    const phongList = document.getElementById("phongList");
+    const favorites = getFavorites();
+
+    phongData.forEach(phong => {
+      const card = document.createElement("div");
+      card.className = "phong-card";
+
+      const isLiked = favorites.includes(phong.id);
+
+      card.innerHTML = `
+        <img src="${phong.hinh_anh}" alt="">
+        <button class="btn-like ${isLiked ? 'active' : ''}" data-id="${phong.id}">
+          ${isLiked ? '♥' : '♡'}
+        </button>
+        <div class="phong-info">
+          <h3>${phong.tieu_de}</h3>
+          <div class="gia">${phong.gia.toLocaleString()} đ/tháng</div>
+          <div class="quan">${phong.quan}</div>
+        </div>
+      `;
+
+      phongList.appendChild(card);
+    });
+
+    // ===== GÁN SỰ KIỆN LIKE =====
+    document.querySelectorAll(".btn-like").forEach(btn => {
+      const id = Number(btn.dataset.id);
+      btn.addEventListener("click", () => toggleFavorite(id, btn));
+    });
+  </script>
 
 </body>
 </html>
